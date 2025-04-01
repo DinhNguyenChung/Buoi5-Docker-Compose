@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  flask-app:
+    container_name: flask_app
+    build: ./flask-app  # Đường dẫn tới thư mục chứa Dockerfile
+    ports:
+      - "5000:5000"  # Mở cổng 5000 trên máy host và container
+    volumes:
+      - ./flask-app:/app  # Mount thư mục flask-app từ host vào container
+    environment:
+      - FLASK_ENV=development  # Chạy Flask trong chế độ phát triển
+
