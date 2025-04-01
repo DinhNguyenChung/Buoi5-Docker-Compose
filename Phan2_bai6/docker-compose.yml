@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_container
+    ports:
+      - "8082:80"  # Mở cổng 8080 cho WordPress
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306  # Cấu hình kết nối MySQL
+      WORDPRESS_DB_NAME: wordpress   # Tên cơ sở dữ liệu WordPress
+      WORDPRESS_DB_USER: exampleuser # Tên người dùng MySQL
+      WORDPRESS_DB_PASSWORD: examplepass # Mật khẩu của người dùng MySQL
+    depends_on:
+      - mysql  # Đảm bảo MySQL khởi động trước
+    volumes:
+      - wordpress_data:/var/www/html  # Dữ liệu của WordPress sẽ được lưu vào volume
+
+  mysql:
+    image: mysql:5.7  # Sử dụng MySQL phiên bản 5.7
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepass  # Mật khẩu root của MySQL
+      MYSQL_DATABASE: wordpress         # Tạo cơ sở dữ liệu wordpress
+      MYSQL_USER: exampleuser           # Tạo người dùng MySQL
+      MYSQL_PASSWORD: examplepass       # Mật khẩu người dùng MySQL
+    volumes:
+      - mysql_data:/var/lib/mysql  # Dữ liệu của MySQL sẽ được lưu vào volume
+
+volumes:
+  wordpress_data:
+  mysql_data:
