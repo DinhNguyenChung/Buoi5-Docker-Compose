@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword   # Đặt mật khẩu cho user root
+      MYSQL_DATABASE: mydatabase          # Tạo một database mặc định
+      MYSQL_USER: user                    # Tạo một user mới
+      MYSQL_PASSWORD: userpassword        # Mật khẩu của user
+    ports:
+      - "3306:3306"                       # Mở cổng 3306 để kết nối với MySQL
+    volumes:
+      - mysql_data:/var/lib/mysql         # Gắn volume để lưu trữ dữ liệu
+
+volumes:
+  mysql_data:                            # Định nghĩa volume cho MySQL
