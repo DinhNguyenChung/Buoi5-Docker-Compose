@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  node-app:
+    container_name: node_app
+    build: ./node-app  # Đường dẫn tới thư mục chứa Dockerfile cho Node.js app
+    ports:
+      - "3001:3000"  # Mở cổng 3000 trên máy host và container
+    volumes:
+      - ./node-app:/app  # Mount thư mục node-app từ host vào container
+    environment:
+      - DB_HOST=mysql  # Tên service MySQL, sẽ dùng trong kết nối
+      - DB_USER=root  # Tên người dùng MySQL
+      - DB_PASSWORD=rootpassword  # Mật khẩu MySQL
+      - DB_NAME=testdb  # Tên cơ sở dữ liệu trong MySQL
+    depends_on:
+      - mysql  # Đảm bảo MySQL khởi động trước Node.js app
+
+  mysql:
+    image: mysql:5.7  # Sử dụng image MySQL version 5.7
+    container_name: mysql_container
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword  # Mật khẩu root MySQL
+      - MYSQL_DATABASE=testdb  # Tạo một cơ sở dữ liệu tên testdb
+    ports:
+      - "3306:3306"  # Mở cổng 3306 cho MySQL
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volume để giữ dữ liệu của MySQL
+
+volumes:
+  mysql_data:
