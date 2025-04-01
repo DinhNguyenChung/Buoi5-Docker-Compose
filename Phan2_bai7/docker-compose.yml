@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
+    ports:
+      - "27017:27017"  # MongoDB default port
+    volumes:
+      - mongo_data:/data/db  # Persist MongoDB data
+  
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo_express_container
+    ports:
+      - "8083:8081"  # Mongo Express web interface port
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo  # Hostname of MongoDB service
+      - ME_CONFIG_MONGODB_PORT=27017  # MongoDB default port
+      - ME_CONFIG_BASICAUTH_USERNAME=admin  # Username for Mongo Express
+      - ME_CONFIG_BASICAUTH_PASSWORD=adminpassword  # Password for Mongo Express
+    depends_on:
+      - mongo  # Ensure MongoDB starts before Mongo Express
+
+volumes:
+  mongo_data:
