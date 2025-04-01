@@ -10,3 +10,9 @@ docker-compose up -d
 ![alt text](image-1.png) 3. Chạy local : 8082
 
 ![alt text](image-2.png)
+
+Dừng và xoá khi không sử dụng
+
+```
+docker-compose down
+```
